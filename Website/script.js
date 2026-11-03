@@ -2,3 +2,6 @@ const toggle=document.querySelector('#theme');if(localStorage.getItem('theme')==
 // Layered case-study reading: each button changes one project's visible editorial layer.
 function activateLayer(button){const target=button.dataset.layerTarget;const group=button.closest('.layer-switch');if(!group)return;const panel=document.getElementById(target);if(!panel)return;group.querySelectorAll('.layer-button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));const container=panel.parentElement;container.querySelectorAll('.layer-panel').forEach(p=>{p.hidden=p!==panel;});}
 document.querySelectorAll('.layer-button').forEach(b=>b.addEventListener('click',()=>activateLayer(b)));
+
+
+document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{const selected=b.dataset.filter;document.querySelectorAll('section.case').forEach(sec=>{const card=document.querySelector('[data-tags] a[href="#'+sec.id+'"]');const tags=card?.closest('[data-tags]')?.dataset.tags.split(' ')||[];sec.hidden=selected!=='all'&&!tags.includes(selected);});document.querySelectorAll('.project-jump a').forEach(a=>{const sec=document.getElementById(a.hash.slice(1));a.hidden=Boolean(sec?.hidden);});}));
